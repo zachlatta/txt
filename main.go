@@ -63,8 +63,8 @@ func (t *Txter) Run() {
 }
 
 func (t *Txter) run() {
-	jobs := make(chan *Msg, len(recipientNumbers.numbers))
-	t.results = make(chan *result)
+	jobs := make(chan *Msg, len(t.Recipients))
+	t.results = make(chan *result, len(t.Recipients))
 
 	var wg sync.WaitGroup
 	wg.Add(len(t.Senders))
@@ -92,7 +92,7 @@ func (t *Txter) run() {
 
 func (t *Txter) worker(senderNumber string, jobs chan *Msg) {
 	for msg := range jobs {
-		msg, resp, err := twl.Messages.SendSMS(senderNumber, msg.Recipient, msg.Body)
+		msg, resp, err := t.Twilio.Messages.SendSMS(senderNumber, msg.Recipient, msg.Body)
 		if err != nil {
 			t.results <- &result{
 				err:        err,
@@ -119,8 +119,6 @@ var (
 	sendingNumbers, recipientNumbers numbers
 
 	flags, requiredFlags []*flag.Flag
-
-	twl *twilio.Client
 )
 
 func main() {
