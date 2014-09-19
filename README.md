@@ -3,6 +3,22 @@
 txt is a command-line utility for sending lots of text messages with lots of
 phone numbers.
 
+### Installation
+
+    $ go get github.com/zachlatta/txt
+
+### Usage
+
+    $ txt [flags]
+
+#### Example
+
+    $ txt -sid $twilio_sid -token $twilio_auth_token -recipients 12552552525,14244242244 -sending +1219-249-3425,+1412-259-3925,+1320-219-3422 -msg "Hello, world!"
+
+##### Help
+
+    $ txt --help
+
 ## License
 
 The MIT License (MIT)
