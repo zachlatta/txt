@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 	"text/template"
+	"time"
 
 	"github.com/rakyll/pb"
 	"github.com/subosito/twilio"
@@ -111,6 +112,8 @@ func (t *Txter) worker(senderNumber string, jobs chan *Msg) {
 			msg:        msg,
 			statusCode: resp.StatusCode,
 		}
+
+		time.Sleep(500 * time.Millisecond)
 	}
 }
 
